@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi9/go-toolset:1.21.9-1.1716478616 AS builder
 COPY git-clone/image/git-init git-init
 ENV GODEBUG="http2server=0"
 RUN CGO_ENABLED=0 \
-    cd git-init && go build -o /tmp/tektoncd-catalog-git-clone 
+    cd git-init && go build -o /tmp/tektoncd-catalog-git-clone
 
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:ef6fb6b3b38ef6c85daebeabebc7ff3151b9dd1500056e6abc9c3295e4b78a51
@@ -11,7 +11,7 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:ef6fb6b3b38ef6c85daebeab
 ENV BINARY=git-init \
     KO_APP=/ko-app
 
-RUN microdnf install -y openssh-clients git git-lfs shadow-utils
+RUN microdnf install -y openssh-clients git git-lfs shadow-utils findutils
 
 COPY --from=builder /tmp/tektoncd-catalog-git-clone ${KO_APP}/${BINARY}
 
