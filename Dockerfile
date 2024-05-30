@@ -9,14 +9,14 @@ RUN CGO_ENABLED=0 \
 FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:ef6fb6b3b38ef6c85daebeabebc7ff3151b9dd1500056e6abc9c3295e4b78a51
 
 ENV BINARY=git-init \
-    APP=app 
+    KO_APP=/ko-app
 
 RUN microdnf install -y openssh-clients git git-lfs shadow-utils
 
-COPY --from=builder /tmp/tektoncd-catalog-git-clone ${APP}/${BINARY}
+COPY --from=builder /tmp/tektoncd-catalog-git-clone ${KO_APP}/${BINARY}
 
-RUN chgrp -R 0 ${APP} && \
-    chmod -R g+rwX ${APP}
+RUN chgrp -R 0 ${KO_APP} && \
+    chmod -R g+rwX ${KO_APP}
 
 LABEL \
     name="konflux-git-init" \
@@ -28,4 +28,4 @@ LABEL \
 RUN groupadd -r -g 65532 nonroot && useradd --no-log-init -r -u 65532 -g nonroot -d /home/git -m nonroot
 USER 65532
 
-ENTRYPOINT ["/app/git-init"]
+ENTRYPOINT ["/ko-app/git-init"]
