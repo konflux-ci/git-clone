@@ -7,7 +7,7 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main"
+      == "main" && ("git-clone".pathChanged() || "Dockerfile".pathChanged())
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: git-clone
@@ -419,7 +419,8 @@ spec:
     - name: workspace
     - name: git-auth
       optional: true
-  taskRunTemplate: {}
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-git-clone
   workspaces:
   - name: workspace
     volumeClaimTemplate:
