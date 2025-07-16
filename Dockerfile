@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi9/go-toolset:9.6-1752083840 AS builder
+FROM registry.access.redhat.com/ubi9/go-toolset:1.24.4-1752083840 AS builder
+
 
 COPY git-clone/image/git-init git-init
 ENV GODEBUG="http2server=0"
