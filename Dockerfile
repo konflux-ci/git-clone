@@ -7,7 +7,7 @@ RUN CGO_ENABLED=0 \
     cd git-init && go build -o /tmp/tektoncd-catalog-git-clone
 
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:6d5a6576c83816edcc0da7ed62ba69df8f6ad3cbe659adde2891bfbec4dbf187
+FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:0d7cfb0704f6d389942150a01a20cb182dc8ca872004ebf19010e2b622818926
 
 ENV BINARY=git-init \
     KO_APP=/ko-app
