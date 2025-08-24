@@ -21,9 +21,12 @@ RUN chgrp -R 0 ${KO_APP} && \
 
 LABEL \
     name="konflux-git-init" \
-    summary="konflux-git-init" \
-    description="konflux-git-init" \
-    io.k8s.display-name="konflux-git-init"
+    summary="Tekton step image for Konflux git init task" \
+    description="Tekton step image for Konflux git init task" \
+    io.k8s.description="Tekton step image for Konflux git init task" \
+    io.k8s.display-name="konflux-git-init" \
+    io.openshift.tags="tekton git init" \
+    com.redhat.component="konflux-git-init"
 
 # Adding the user to make sure git+ssh uses HOME to read client configuration
 RUN groupadd -r -g 65532 nonroot && useradd --no-log-init -r -u 65532 -g nonroot -d /home/git -m nonroot
