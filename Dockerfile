@@ -7,6 +7,7 @@ RUN CGO_ENABLED=0 \
     cd git-init && go build -o /tmp/tektoncd-catalog-git-clone
 
 
+FROM quay.io/konflux-ci/buildah-task:latest@sha256:27400eaf836985bcc35182d62d727629f061538f61603c05b85d5d99bfa7da2d AS buildah-task-image
 FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:7c5495d5fad59aaee12abc3cbbd2b283818ee1e814b00dbc7f25bf2d14fa4f0c
 
 ENV BINARY=git-init \
@@ -18,6 +19,8 @@ COPY --from=builder /tmp/tektoncd-catalog-git-clone ${KO_APP}/${BINARY}
 
 RUN chgrp -R 0 ${KO_APP} && \
     chmod -R g+rwX ${KO_APP}
+
+COPY --from=buildah-task-image /usr/bin/retry /usr/bin/
 
 LABEL \
     name="konflux-git-init" \
