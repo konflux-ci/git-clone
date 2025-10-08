@@ -4,7 +4,11 @@ FROM registry.access.redhat.com/ubi9/go-toolset:1.24.6-1758501173 AS builder
 COPY git-clone/image/git-init git-init
 ENV GODEBUG="http2server=0"
 RUN CGO_ENABLED=0 \
-    cd git-init && go build -o /tmp/tektoncd-catalog-git-clone
+    cd git-init && go build -o /tmp/tektoncd-catalog-git-clone && cd -
+
+COPY source-tool source-tool
+RUN CGO_ENABLED=0 \
+    cd source-tool && go build -o /tmp/slsa-source-tool && cd -
 
 
 FROM quay.io/konflux-ci/buildah-task:latest@sha256:27400eaf836985bcc35182d62d727629f061538f61603c05b85d5d99bfa7da2d AS buildah-task-image
@@ -16,6 +20,7 @@ ENV BINARY=git-init \
 RUN microdnf install -y openssh-clients git git-lfs shadow-utils findutils
 
 COPY --from=builder /tmp/tektoncd-catalog-git-clone ${KO_APP}/${BINARY}
+COPY --from=builder /tmp/slsa-source-tool /usr/bin/slsa-source-tool
 
 RUN chgrp -R 0 ${KO_APP} && \
     chmod -R g+rwX ${KO_APP}

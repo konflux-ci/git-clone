@@ -1,3 +1,6 @@
 [submodule "git-clone"]
 	path = git-clone
 	url = https://github.com/tektoncd-catalog/git-clone.git
+[submodule "source-tool"]
+	path = source-tool
+	url = https://github.com/slsa-framework/source-tool.git
