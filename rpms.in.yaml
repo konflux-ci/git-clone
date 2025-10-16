@@ -1,0 +1,10 @@
+contentOrigin:
+  repofiles:
+    - ./ubi.repo
+packages:
+- openssh-clients
+- git
+- git-lfs
+- shadow-utils
+- findutils
+arches: [x86_64, aarch64]
