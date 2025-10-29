@@ -57,7 +57,7 @@ spec:
     description: Execute the build with network isolation
     name: hermetic
     type: string
-  - default: '{"packages": [{"path": "git-clone/image/git-init", "type": "gomod"}, {"path": "source-tool", "type": "gomod"}, {"type": "rpm"}], "flags": ["gomod-vendor"]}'
+  - default: '{"packages": [{"path": "git-clone/image/git-init", "type": "gomod"}, {"path": "source-tool", "type": "gomod"}, {"type": "rpm"}]}'
     description: Build dependencies to be prefetched by Cachi2
     name: prefetch-input
     type: string
