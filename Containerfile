@@ -1,11 +1,11 @@
-FROM registry.access.redhat.com/ubi9/go-toolset:1.24.6-1760420453 AS git-builder
+FROM registry.access.redhat.com/ubi9/go-toolset:1.25.3-1766405866 AS git-builder
 
 COPY git-clone/image/git-init git-init
 ENV GODEBUG="http2server=0"
 RUN CGO_ENABLED=0 \
     cd git-init && go build -o /tmp/tektoncd-catalog-git-clone
 
-FROM registry.access.redhat.com/ubi9/go-toolset:1.24.6-1760420453 AS slsa-builder
+FROM registry.access.redhat.com/ubi9/go-toolset:1.25.3-1766405866 AS slsa-builder
 
 COPY source-tool source-tool
 RUN CGO_ENABLED=0 \
